@@ -1,0 +1,85 @@
+#include <iostream>
+#include<cmath>
+#include<vector>
+using namespace std;
+
+///chuyển string thành số vd 12345
+int change(string s, int len){
+    int res=0; int x=0;
+    for(int i=len-1;i>=0;i--)
+    {
+        res += (s[i] - '0') * pow(10, x);
+        ///When converting a character to an integer, you need to subtract the ASCII value of '0' to get the actual digit.
+        x++;
+    }
+    return res;
+
+}
+
+/// swap
+void doicho(int &a,int &b){
+    int tmp;
+    tmp=b;
+    b=a;
+    a=tmp;
+}
+
+int main()
+{
+    string s;cin>>s;
+    int n=s.length();
+    vector<int> day_A; //dùng vector thử i
+
+
+    for(int i=0;i<n;i++){
+        if(isdigit(s[i])&& s[i]!='0')
+           {
+                string kq;
+                kq += s[i];
+                int dem=1;
+                /// check số tiếp để in liền
+                for(int k=i+1;k<n;k++){
+                    if(isdigit(s[k]))
+                        {
+                            kq+= s[k];
+                            s[k]='0';
+                            dem++;
+                        }
+                    else{break;}
+                }
+                int res=change(kq,dem);
+                day_A.push_back(res);
+           }
+    }
+
+    /// tính trung bình hoy
+    double tong=0;
+    for(int i=0;i<day_A.size();i++)
+    {
+        cout<< day_A[i]<< " ";
+        tong+= day_A[i];
+    }
+    cout<<endl;
+    double tbc= tong/(day_A.size());//cout<<tbc;
+    vector <int> sx;
+    for(int i=0;i<day_A.size();i++)
+    {
+        if(day_A[i]>= tbc && (day_A[i]%2==0))
+            {
+                sx.push_back(day_A[i]);
+            }
+    }
+
+    /// sắp xếp thou
+    for(int i=0;i<sx.size();i++){
+        for(int j=i+1;j<sx.size();j++)
+        {
+                if(sx[j]>sx[i]){doicho(sx[j],sx[i]);}
+        }
+    }
+    /// in ra thoi
+    for(int i=0;i<sx.size();i++)
+    {
+        cout<< sx[i]<< " ";
+    }
+}
