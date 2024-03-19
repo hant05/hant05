@@ -1,0 +1,91 @@
+#include<bits/stdc++.h>
+using namespace std;
+///btvn ltnc bài 2
+// n triệu chứng và m bệnh
+//a[i][j]=1 nếu triệu chứng lq bệnh
+///1. in ra tất cả triệu chứng và số bệnh
+//liên quan đến mỗi triệu chứng đó vd triệu chứng 1: ?bệnh
+///2/ In ra tất cả cặp triệu chứng ko cùng xh ở bất cứ bệnh nào
+///3/ In ra cặp bệnh gần gũi nhau : CSgg >0.5; CSgg= số triệu chứng cùng
+//xuất hiện ở cả 2 bệnh/ số triệu chứng xh ít nhất ở 1 trong 2 bệnh đó
+int main(){
+    int hang,cot;
+    cout<<"Nhap so hang: "; cin>>hang;
+    cout<<"Nhap so cot: ";cin>>cot;
+    int a[hang][cot];
+    //nhập mảng
+    for(int i=0;i<hang;i++){
+        for(int j=0;j<cot;j++){
+            cin>>a[i][j];
+        }
+    }
+    ///câu 1: dem so benh cua trieu chung :> check
+    cout<<"Cau 1: ";
+    for(int i=0;i<hang;i++){
+        int dem=0;
+        for(int j=0;j<cot;j++){
+            if(a[i][j]==1) dem++;
+        }
+        cout<< i<<"(" <<dem<<")"<<"; ";
+    }
+    cout<<endl;
+    ///Câu 2: nghĩa là cái này có thì cái kia ko
+    cout<<"Cau 2: ";
+    int check;
+    for(int i=0;i<hang;i++){//cout<<"vong lap thu: "<< i<<endl;
+        for(int k=i+1;k<hang;k++)// ktra hàng tiếp theo
+        {
+            for(int j=0;j<cot;j++)
+            {
+                //cout<< i << "/" <<k<< "/"<< j<<endl;
+                if(a[i][j]==1 &&a[k][j]==1)
+                    {
+                        check=0;break;
+                    }
+                check=1;
+            }
+            if(check==1) {cout<<i<< "-" << k<< "; ";}
+        }
+
+    }
+    cout<<endl;
+    ///Câu 3: CẶP BỆNH Gần gũi : là cột
+    cout<<"Cau 3: ";
+    double csgg;
+    for(int j=0;j<cot;j++){
+        for(int h=j+1;h<cot;h++)//cột tiếp theo
+        {
+            int dem_2=0; int dem=0;
+            for(int m=0;m<hang;m++)
+                {
+                    if(a[m][j]==1 || a[m][h]==1)
+                        {
+                            dem++;
+                        }
+                    if(a[m][j]==1 && a[m][h]==1){
+                        dem_2++;
+                    }
+
+                }
+            csgg= (double)dem_2/dem;
+            if(csgg>0.5){cout<<j<<"-"<<h<<";";}
+        }
+    }
+
+}
+///5
+///4
+///1 0 1 1
+///0 1 0 0
+///1 1 1 0
+///1 0 1 1
+///0 1 1 1
+//Câu 1: 0(3); 1(1); 2(3); 3(3); 4(3)
+//Câu 2: 0-1; 1-3
+//Câu 3: 0-2; 2-3
+
+
+
+
+
+
